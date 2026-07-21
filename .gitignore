@@ -1,0 +1,29 @@
+# vibevm cache (per-project, should never be committed)
+/.vibe/
+
+# vibevm personal settings (L3 — never committed; PROP-040 §9 #gitignore-autogen).
+/.vibe/settings.local.toml
+/.vibe/*.local.toml
+
+# Per-package vibevm caches (each package carries its own .vibe/ under <v>/)
+**/.vibe/
+
+# Vendored static deps — populated by `vibe install` per-package, not committed
+# (each package carries its own vibedeps/ under <v>/)
+**/vibedeps/
+
+# Node (per-package under <v>/app or <v>/)
+**/node_modules/
+**/package-lock.json
+**/dist/
+**/build/
+
+# Cargo (per-package under <v>/crates or <v>/)
+**/target/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
