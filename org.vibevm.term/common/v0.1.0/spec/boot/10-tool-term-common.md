@@ -15,9 +15,16 @@ terminal product (vibeterm, vibeframe, vibe-launcher) consumes it.
     parameterised by app name.
 - **Normative wire contracts** (`spec/modules/term-common/`) — the
   contracts every terminal product must honour. Each is a self-contained
-  PROP cited as `spec://term-common/PROP-<name>#<section>`.
-- *(Phase 2)* **Version-manager** (`vvm/`) — the TypeScript port of the
-  host's vibe vvm, used by every product's `<product> self install`.
+  PROP cited as `spec://term-common/PROP-<name>#<section>`:
+  - `PROP-vvm` — the ported version-manager (twin of the host's `vibe self`).
+  - `PROP-path-install` — on-PATH placement + desktop shortcuts.
+  - `PROP-electron-packaging`, `PROP-control-protocol`, `PROP-discovery`,
+    `PROP-env-markers`, `PROP-icon-osc`, `PROP-pty-lifecycle`.
+- **Version-manager** (`vvm/`) — the TypeScript port of the host's vibe vvm
+  (`spec://term-common/PROP-vvm#root`), used by every product's `<product>
+  self install`. The full verb set (install | update | use | ls | current |
+  which | doctor | remove | gc | env | relocate), cross-platform placement
+  (Win .lnk + Linux .desktop + macOS .app + rename-aside).
 
 ## Discipline
 
