@@ -1,0 +1,23 @@
+{
+  // AI-Native TS floor: strict, no implicit any, branded types are enforced
+  // by usage not by tsconfig (the brands are nominal at the type level).
+  // Engine helpers are pure — no DOM, no Electron, no node-pty imports.
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2023"],
+    "types": ["node"],
+    "strict": true,
+    "noImplicitAny": true,
+    "noUncheckedIndexedAccess": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "exactOptionalPropertyTypes": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "checkJs": false
+  },
+  "include": ["src/**/*.mjs", "src/**/*.ts", "test/**/*.mjs"]
+}

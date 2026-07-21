@@ -1,0 +1,26 @@
+{
+  "name": "@org.vibevm/term-common",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "term-common — shared TypeScript helpers (arg/keymap/packaging) and the wire contracts every vibevm-term product honours.",
+  "engines": {
+    "node": ">=22.6"
+  },
+  "main": "src/index.mjs",
+  "exports": {
+    ".": "./src/index.mjs",
+    "./args": "./src/args.mjs",
+    "./keymap": "./src/keymap.mjs",
+    "./packaging": "./src/packaging.mjs"
+  },
+  "scripts": {
+    "start": "echo 'term-common is a library — no start target' >&2 && exit 1",
+    "test": "node --test",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "~5.6.0"
+  }
+}
