@@ -1,5 +1,25 @@
 # WAL — term-common continuation state
 
+## CHECKPOINT 2026-07-21 — VERSION-MANAGER PORT LANDED (Phase 2b)
+
+**Phase:** 2b. **Status:** the ported version-manager (`vvm/`, twin of the host's `vibe self`,
+spec://vibevm/common/PROP-019) landed in term-common — **15 files**, **4 commits** in the package
+(`2cd06e1` vvm port + tests · `0c96d74` normative PROPs · `4a4383c` vibeterm/vibeframe self CLIs ·
+`a773e5b` launcher self CLI). The full verb set (install | update | use | ls | current | which |
+doctor | remove | gc | env | relocate), cross-platform placement (Win .lnk + Linux .desktop +
+macOS .app + rename-aside), and the diff-copy placement + dedup-skip + source-provenance relocate
+ported 1-for-1 from the host Rust. **Tests:** 12 new vvm tests (model parse, store round-trip,
+instance-path nesting, monotonic alloc, the current pointer, state.toml + manifest TOML round-trips,
+diff-copy place, the dedup-skip + force-rebuild install pipeline, the relocate oracle, pathWithPrefix);
+the full 53-test common suite green. **End-to-end smoke (via fake builder):** install → ls → current →
+which --json → install-again (dedup-skip fires) → relocate (repoint provenance) — all green. **Normative
+contracts:** `PROP-vvm` (the ported version-manager twin) + `PROP-path-install` (placement + shortcuts)
+join the term-common contract set. **Product CLIs:** vibeterm/vibeframe/launcher each get
+`bin/self.mjs` + `scripts/install.mjs` + a `PROP-self-install.md`. **No blocker. Next:** real-build
+verification (`vibeterm self install` on a fresh `~/opt`) once the owner wires the actual Electron
+packaging / cargo build paths; conformance-golden between Rust `vibe-vvm` and TS `term-vvm` is a
+follow-up (the contracts agree by construction today).
+
 ## CHECKPOINT 2026-07-21 — SHARED LAYER COMPLETE (Phase 1)
 
 **Phase:** 1 (packages move-in). **Status:** the shared layer — helpers
