@@ -12,7 +12,8 @@
     ".": "./src/index.mjs",
     "./args": "./src/args.mjs",
     "./keymap": "./src/keymap.mjs",
-    "./packaging": "./src/packaging.mjs"
+    "./packaging": "./src/packaging.mjs",
+    "./src/packaging.mjs": "./src/packaging.mjs"
   },
   "scripts": {
     "start": "echo 'term-common is a library — no start target' >&2 && exit 1",
