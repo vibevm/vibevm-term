@@ -1,0 +1,41 @@
+[package]
+name = "vibeterm"
+group = "org.vibevm.term"
+kind = "app"
+version = "0.1.0"
+authors = ["Oleg Chirukhin"]
+license = "UPL-1.0"
+description = "vibeterm — the complex multi-tab / multi-window AI-UI-ready terminal workspace (Electron + SolidJS shell), built on the vibeterm action/AIUI core. The standalone product form of the vibe terminal; the simple sibling is vibeframe"
+keywords = ["vibevm", "terminal", "electron", "solidjs", "aiui", "workspace"]
+
+[compatibility]
+min_vibe_version = "0.1.0"
+requires_kinds = []
+
+# Owner directive: every vibevm-term package adopts the redbook practices and
+# the AI-Native Rust discipline from birth (mirrors
+# packages/org.vibevm.fractality/).
+[requires.packages]
+"flow:org.vibevm.world/redbook" = "^0.2.0"
+"stack:org.vibevm.ai-native/rust-ai-native" = "^0.7.0"
+# term-common is the shared JS helpers + normative wire contracts every
+# terminal product consumes; pinned exact within a workspace.
+"tool:org.vibevm.term/term-common" = "=0.1.0"
+
+# The boss-side integration: the boot snippet a consuming boss loads at
+# session start (slot 20 — after term-common slot 10 and launcher slot 15).
+[boot_snippet]
+source = "spec/boot/20-app-vibeterm.md"
+category = "app"
+
+# The default registry pair every vibevm project carries. In-repo packages
+# resolve from this repo's own org.vibevm.term/ directory; these two cover
+# the redbook/ai-native members published only on vibespecs.
+[[registry]]
+name = "vibespecs"
+url = "https://github.com/vibespecs"
+
+[[registry]]
+name = "vibespecs-gitverse"
+url = "https://gitverse.ru/vibespecs"
+naming = "name"
