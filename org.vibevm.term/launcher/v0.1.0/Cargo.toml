@@ -1,0 +1,49 @@
+# vibe-launcher v0.1.0 — Cargo workspace (the three launcher binaries).
+#
+# This version dir is its own workspace; the vibevm-term repo root does not
+# carry a root-level Cargo.toml (each Rust package is independent — the same
+# shape as packages/org.vibevm.fractality/fractality/v0.1.0/ in the host).
+#
+# Floor: cargo fmt --check && cargo clippy --workspace --all-targets -- -D
+# warnings && cargo test --workspace.
+
+[workspace]
+resolver = "3"
+members = ["crates/vibe-launcher"]
+# vibedeps packages are their own Cargo workspaces; without the exclude,
+# cargo would bind their crates to THIS workspace and manifest inheritance
+# breaks (GUIDE-AI-NATIVE-RUST §13.3, PROP-024 §2.4).
+exclude = ["vibedeps"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.93"
+license = "UPL-1.0"
+authors = ["Oleg Chirukhin"]
+publish = false
+repository = "https://github.com/vibevm/vibevm-term"
+homepage = "https://github.com/vibevm/vibevm-term"
+
+[workspace.dependencies]
+# The specmark crate lives in the AI-Native Rust stack, vendored into
+# vibedeps/ by `vibe install`. Renamed so sources say `specmark::scope!(…)`
+# like every other vibevm-umbrella crate (host: core-ai-native-specmark).
+specmark = { package = "core-ai-native-specmark", path = "vibedeps/stack-rust-ai-native-lang/0.7.0/crates/vendor/core-ai-native-specmark" }
+
+# Error handling — `thiserror::Error` derive for the launcher's typed
+# failure enum (the LauncherError in lib.rs).
+thiserror = "2"
+
+# Windows-specific: the MessageBoxW dialog, the console-process-count probe,
+# and the hide-own-console call.
+windows-sys = { version = "0.59", features = [
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_Foundation",
+    "Win32_System_Console",
+] }
+
+# Per-binary icon embedding (vibetree.exe ≠ vibeterm.exe) via
+# `cargo:rustc-link-arg-bin`; winres embeds one icon crate-wide, which cannot
+# distinguish the launchers.
+embed-resource = "3"

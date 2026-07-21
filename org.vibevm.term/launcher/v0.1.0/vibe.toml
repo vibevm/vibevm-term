@@ -1,0 +1,51 @@
+[package]
+name = "launcher"
+group = "org.vibevm.term"
+kind = "tool"
+version = "0.1.0"
+authors = ["Oleg Chirukhin"]
+license = "UPL-1.0"
+description = "vibe-launcher — the GUI launchers (vibetree, vibeterm, vibeframe) that spawn `vibe` without a console flash, and report any failure in a native dialog. A thin shell over the host's vibe CLI — the heavy work stays in `vibe`"
+keywords = ["vibevm", "launcher", "gui", "windows", "electron"]
+
+[compatibility]
+min_vibe_version = "0.1.0"
+requires_kinds = []
+
+# Owner directive: every vibevm-term package adopts the redbook practices and
+# the AI-Native Rust discipline from birth (mirrors
+# packages/org.vibevm.fractality/).
+[requires.packages]
+"flow:org.vibevm.world/redbook" = "^0.2.0"
+"stack:org.vibevm.ai-native/rust-ai-native" = "^0.7.0"
+
+# The boss-side integration: the boot snippet a consuming boss loads at
+# session start (slot 15 — after the foundational term-common, before the
+# app packages).
+[boot_snippet]
+source = "spec/boot/15-tool-launcher.md"
+category = "tool"
+
+# The shipped binaries: `vibe bin build` (or the Phase-2 `launcher self
+# install`) compiles them in this slot.
+[[binary]]
+name = "vibetree"
+crate = "crates/vibe-launcher"
+
+[[binary]]
+name = "vibeterm"
+crate = "crates/vibe-launcher"
+
+[[binary]]
+name = "vibeframe"
+crate = "crates/vibe-launcher"
+
+# The default registry pair every vibevm project carries.
+[[registry]]
+name = "vibespecs"
+url = "https://github.com/vibespecs"
+
+[[registry]]
+name = "vibespecs-gitverse"
+url = "https://gitverse.ru/vibespecs"
+naming = "name"
