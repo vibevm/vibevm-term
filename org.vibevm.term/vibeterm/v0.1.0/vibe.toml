@@ -1,7 +1,7 @@
 [package]
 name = "vibeterm"
 group = "org.vibevm.term"
-kind = "app"
+kind = "tool"
 version = "0.1.0"
 authors = ["Oleg Chirukhin"]
 license = "UPL-1.0"

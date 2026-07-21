@@ -10,7 +10,7 @@ shell command. It is the stable host for `vibe tree` (VibeTree) and the
 AIUI observation session; the complex multi-tab sibling is `vibeterm`
 (`spec://vibeterm/PROP-044#root`).
 
-It is an `app` package under the `org.vibevm.term` namespace. The
+It is a `tool` package (an Electron app product) under the `org.vibevm.term` namespace. The
 Electron app lives under `app/`.
 
 ## Session boot

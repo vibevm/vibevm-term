@@ -10,7 +10,7 @@ ready action/AIUI core (PROP-044/046/047). The standalone product form
 of the vibe terminal. The simple sibling is `vibeframe`
 (`spec://vibeframe/PROP-045#root`).
 
-It is an `app` package under the `org.vibevm.term` namespace. The
+It is a `tool` package (an Electron app product) under the `org.vibevm.term` namespace. The
 Electron app lives under `app/` (the standard package layout — code and
 spec side by side, as in `packages/org.vibevm.fractality/fractality/v0.1.0/`).
 
