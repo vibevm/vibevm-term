@@ -82,7 +82,7 @@ let headless = null;
 let controlToken = null;
 /** Discovery files to remove on quit. @type {{pidFile:string, latestFile:string} | null} */
 let discovery = null;
-/** key-name → pty escape sequence (lib/keymap.mjs); set in control mode. */
+/** key-name → pty escape sequence (@org.vibevm/term-common/keymap); set in control mode. */
 let keyToSeq = null;
 /**
  * Live-preview hooks (set in `createWindow`): `stopPty` tears the hosted
@@ -792,7 +792,7 @@ function layoutAll() {
 async function openTab(baseExec, opts) {
   nextTabNum += 1;
   const id = `t${nextTabNum}`;
-  const { defaultShell, splitCommand } = await import('./lib/args.mjs');
+  const { defaultShell, splitCommand } = await import('@org.vibevm/term-common/args');
   const commandLine = baseExec ?? defaultShell(process.platform, process.env);
   const { file, args } = splitCommand(commandLine);
   const title = `Terminal ${nextTabNum}`;
@@ -1160,7 +1160,7 @@ async function createShellWindow({ exec, iconName, hideWindow }) {
 
 async function createWindow() {
   // Pure, dependency-free logic — the same module the unit tests import.
-  const { parseArgs, defaultShell, splitCommand } = await import('./lib/args.mjs');
+  const { parseArgs, defaultShell, splitCommand } = await import('@org.vibevm/term-common/args');
 
   // `headless: hideWindow` renames on destructure so it does not shadow the
   // module-level `headless` (the @xterm/headless mirror).
@@ -1185,7 +1185,7 @@ async function createWindow() {
     // window, so an agent can attach as early as possible. The headless mirror
     // is created at the args size and resized to the real grid once the pty
     // spawns (below).
-    ({ keyToSeq } = await import('./lib/keymap.mjs'));
+    ({ keyToSeq } = await import('@org.vibevm/term-common/keymap'));
     startControlServer(cols, rows);
   }
 

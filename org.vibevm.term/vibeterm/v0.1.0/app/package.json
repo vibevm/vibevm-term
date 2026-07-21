@@ -10,9 +10,7 @@
   "main": "main.cjs",
   "scripts": {
     "start": "electron .",
-    "test": "npm run test:lib && npm run test:engine",
-    "test:lib": "node --test test/args.test.mjs test/keymap.test.mjs",
-    "test:engine": "vitest run",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "build:engine": "esbuild src/engine/index.ts --bundle --format=esm --platform=node --outfile=dist/engine/index.js",
     "build:chrome": "vite build",
@@ -20,6 +18,7 @@
     "package": "node scripts/package.mjs"
   },
   "dependencies": {
+    "@org.vibevm/term-common": "file:../../common/v0.1.0",
     "@xterm/addon-fit": "^0.10.0",
     "@xterm/headless": "^5.5.0",
     "@xterm/xterm": "^5.5.0",

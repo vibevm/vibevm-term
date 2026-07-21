@@ -30,20 +30,24 @@ Graceful teardown (otherwise Electron pops an error dialog):
    outside a real console, which is swallowed; `app.quit()` reaps the child
    regardless.
 
-The pure argument/command logic lives in `lib/args.mjs`, which imports nothing
+The pure argument/command logic lives in `@org.vibevm/term-common/args`
+(the shared term-common package — a `file:` dep), which imports nothing
 from Electron or node-pty, so it is unit-tested under a plain `node --test`
-(no native build, no GUI).
+(no native build, no GUI). The same package carries the keymap
+(`/keymap`) and the generalized packaging driver (`/packaging`) shared
+with vibeframe.
 
 ## Setup
 
 Requires Node ≥ 22.6 and npm 11.
 
 ```sh
-cd apps/vibeterm
+cd org.vibevm.term/vibeterm/v0.1.0/app
 
 # 1. Install dependencies. npm 11 blocks native postinstall scripts by
 #    default, so node-pty's prebuild and Electron's binary are NOT fetched
-#    by `npm install` alone.
+#    by `npm install` alone. (The `file:` dep on term-common resolves
+#    from its sibling directory in the same repo.)
 npm install
 
 # 2. Build/verify node-pty's native addon (fetches the Windows prebuild +
@@ -135,7 +139,7 @@ is `401 {"error":"unauthorized"}`.
 
 `POST /input` maps each symbolic key name (`Enter`, `Esc`, `Tab`, `BackTab`,
 `Space`, `Backspace`, arrows, `Shift+`arrows, `F1`–`F12`; case-insensitive — see
-`lib/keymap.mjs`) to the bytes the hosted program expects, writing them in order
+`@org.vibevm/term-common/keymap`) to the bytes the hosted program expects, writing them in order
 and then `text` literally. The encoding is **platform-specific**: standard xterm
 VT sequences on Unix, but **win32-input-mode** (`ESC [ Vk;Sc;Uc;Kd;Cs;Rc _`) on
 Windows — a ConPTY synthesises a key record from the raw VT form for a cooked
@@ -157,24 +161,28 @@ exiting child closes vibeterm as before.
 ## Test
 
 ```sh
-npm test           # === node --test  (auto-discovers test/*.test.mjs)
+npm test           # === vitest run  (the engine cells under src/engine/)
 ```
 
-The tests exercise the pure modules only — `lib/args.mjs` (`parseArgs`,
-`defaultShell`, `splitCommand`) and `lib/keymap.mjs` (`keyToSeq`) — and need no
-dependencies installed, so they run on a bare Node. (`node --test` with no path
-uses Node's default test-file glob, which finds `test/*.test.mjs` and skips
-`node_modules`. The bare form is the repo convention — `node --test <dir>` is
-not a valid directory search on Node 24.)
+The pure helpers (`parseArgs`, `defaultShell`, `splitCommand`, `keyToSeq`,
+the win32-input-mode table) are tested in their shared home,
+`@org.vibevm/term-common` — run them there. This package runs only the
+engine-cell tests (`src/engine/*.test.ts` under vitest), which exercise
+the render-free action/AIUI core (PROP-046/047).
 
 ## Layout
 
 - `main.cjs` — Electron main: spawns node-pty, wires IPC both ways, handles
   graceful teardown, and (under `--control`) runs the AIUI control server and
   headless-xterm mirror. (`.cjs` = always CommonJS, regardless of `"type"`.)
-- `renderer.js` — the xterm.js renderer, loaded by `index.html`.
-- `index.html` — links xterm's stylesheet, hosts the `#term` grid.
-- `lib/args.mjs` — pure, testable arg + command helpers (no Electron/node-pty).
-- `lib/keymap.mjs` — pure key-name → PTY escape-sequence map (`keyToSeq`).
-- `test/args.test.mjs` — `node --test` unit tests for `lib/args.mjs`.
-- `test/keymap.test.mjs` — `node --test` unit tests for `lib/keymap.mjs`.
+  Imports the pure helpers from `@org.vibevm/term-common/args` and `/keymap`.
+- `preload.cjs` / `preload.d.ts` — the typed IPC bridge (`contextIsolation: true`).
+- `index.html` — the chrome host window.
+- `src/engine/` — the render-free vibeterm-core TS module (PROP-046/047):
+  the action registry, the ModelView, the transport codec.
+- `src/chrome/` — the SolidJS chrome (App, TabList, ProfilesRail, etc.).
+- `terminal-view/` — lean vanilla-TS + xterm.js per-tab pages.
+- `scripts/package.mjs` — a thin wrapper over
+  `@org.vibevm/term-common/packaging`'s `packageApp`, called with
+  `app='vibeterm'`.
+- `scripts/cdp-smoke.mjs`, `scripts/cdp-split-smoke.mjs` — CDP smoke tests.
