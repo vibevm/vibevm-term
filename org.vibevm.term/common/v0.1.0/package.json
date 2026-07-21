@@ -13,7 +13,20 @@
     "./args": "./src/args.mjs",
     "./keymap": "./src/keymap.mjs",
     "./packaging": "./src/packaging.mjs",
-    "./src/packaging.mjs": "./src/packaging.mjs"
+    "./src/packaging.mjs": "./src/packaging.mjs",
+    "./vvm": "./vvm/index.mjs",
+    "./vvm/cli": "./vvm/cli.mjs",
+    "./vvm/install": "./vvm/install.mjs",
+    "./vvm/relocate": "./vvm/relocate.mjs",
+    "./vvm/doctor": "./vvm/doctor.mjs",
+    "./vvm/shortcuts": "./vvm/shortcuts.mjs",
+    "./vvm/env": "./vvm/env.mjs",
+    "./vvm/store": "./vvm/store.mjs",
+    "./vvm/model": "./vvm/model.mjs",
+    "./vvm/placer": "./vvm/placer.mjs",
+    "./vvm/builder": "./vvm/builder.mjs",
+    "./vvm/source": "./vvm/source.mjs",
+    "./vvm/toml": "./vvm/toml.mjs"
   },
   "scripts": {
     "start": "echo 'term-common is a library — no start target' >&2 && exit 1",
