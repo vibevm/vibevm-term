@@ -1,0 +1,27 @@
+{
+  "name": "@org.vibevm/vibeframe",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "vibeframe — a minimal Electron terminal: an interactive node-pty child rendered with xterm.js. The simple terminal frame VibeTree runs in; the complex sibling is vibeterm.",
+  "engines": {
+    "node": ">=22.6"
+  },
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "package": "node scripts/package.mjs"
+  },
+  "dependencies": {
+    "@org.vibevm/term-common": "file:../../common/v0.1.0",
+    "@xterm/addon-fit": "^0.10.0",
+    "@xterm/headless": "^5.5.0",
+    "@xterm/xterm": "^5.5.0",
+    "electron": "^32.0.0",
+    "node-pty": "^1.1.0"
+  },
+  "devDependencies": {
+    "@electron/packager": "^20.0.0",
+    "@electron/rebuild": "^4.0.0"
+  }
+}

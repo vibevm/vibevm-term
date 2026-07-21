@@ -1,0 +1,22 @@
+# vibevm cache (per-project, should never be committed)
+/.vibe/
+
+# vibevm personal settings (L3 — never committed).
+/.vibe/settings.local.toml
+/.vibe/*.local.toml
+
+# Vendored static deps — populated by `vibe install`, not committed
+/vibedeps/
+
+# Node (under app/)
+/app/node_modules/
+/app/package-lock.json
+/app/dist/
+/app/build/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/

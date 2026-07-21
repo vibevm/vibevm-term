@@ -1,0 +1,39 @@
+[package]
+name = "vibeframe"
+group = "org.vibevm.term"
+kind = "app"
+version = "0.1.0"
+authors = ["Oleg Chirukhin"]
+license = "UPL-1.0"
+description = "vibeframe — the simple, single-window Electron terminal frame. The stable host for `vibe tree` (VibeTree) and the AIUI observation session; the complex sibling is vibeterm"
+keywords = ["vibevm", "terminal", "electron", "vibetree-host", "aiui"]
+
+[compatibility]
+min_vibe_version = "0.1.0"
+requires_kinds = []
+
+# Owner directive: every vibevm-term package adopts the redbook practices and
+# the AI-Native Rust discipline from birth (mirrors
+# packages/org.vibevm.fractality/).
+[requires.packages]
+"flow:org.vibevm.world/redbook" = "^0.2.0"
+"stack:org.vibevm.ai-native/rust-ai-native" = "^0.7.0"
+# term-common is the shared JS helpers + normative wire contracts every
+# terminal product consumes; pinned exact within a workspace.
+"tool:org.vibevm.term/term-common" = "=0.1.0"
+
+# The boss-side integration: the boot snippet a consuming boss loads at
+# session start (slot 20 — same as vibeterm; both are app-kind packages).
+[boot_snippet]
+source = "spec/boot/20-app-vibeframe.md"
+category = "app"
+
+# The default registry pair every vibevm project carries.
+[[registry]]
+name = "vibespecs"
+url = "https://github.com/vibespecs"
+
+[[registry]]
+name = "vibespecs-gitverse"
+url = "https://gitverse.ru/vibespecs"
+naming = "name"
