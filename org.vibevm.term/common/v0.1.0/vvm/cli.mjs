@@ -311,9 +311,12 @@ async function doInstall({ config, store, cmd, env, cwd, events }) {
   const selector = selectorParse(cmd.selector, forced);
   const now = new Date().toISOString();
 
-  // Resolve the source tree: in-tree first (the committer's checkout),
-  // else a linked-source rebuild, else (TODO) a managed clone.
-  const inTree = findSourceRoot(cwd);
+  // Resolve the source tree: a config-pinned sourceRoot (the product
+  // package root) wins — every product's bin/self.mjs sets it to the dir
+  // that carries the package's vibe.toml. Else walk up from CWD looking
+  // for a vibe.toml (the in-tree committer build). Else a linked-source
+  // rebuild, else (TODO) a managed clone.
+  const inTree = config.sourceRoot ?? findSourceRoot(cwd);
   const preferInTree = selector.tag === 'latest' && cmd.mirror === undefined;
   let sourceDir;
   let resolved;
