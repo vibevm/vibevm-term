@@ -18,7 +18,7 @@
     "package": "node scripts/package.mjs"
   },
   "dependencies": {
-    "@org.vibevm/term-common": "file:../../common/v0.1.0",
+    "@org.vibevm/term-common": "file:../../../common/v0.1.0",
     "@xterm/addon-fit": "^0.10.0",
     "@xterm/headless": "^5.5.0",
     "@xterm/xterm": "^5.5.0",
