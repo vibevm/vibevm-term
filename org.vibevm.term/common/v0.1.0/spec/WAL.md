@@ -1,5 +1,25 @@
 # WAL — term-common continuation state
 
+## CHECKPOINT 2026-07-23 — REAL-BUILD VERIFY PASSED (all 3 products install)
+
+**Phase:** 2b real-build verification. **Status:** all three products now
+`<product> self install` end-to-end on a real host (Windows, `~/opt`):
+`launcher` (3 Rust exes — vibetree/vibeterm/vibeframe), `vibeterm` (Electron
+packaged app), `vibeframe` (Electron packaged app). Each creates its instance,
+flips `current`, places its exe(s) in `~/opt/bin/`, and creates Start-menu
+shortcuts. `vibe tree -t` resolves vibeframe through the PATH tier. Two
+build-fix bugs found and fixed: (1) `vvm/cli.mjs:doInstall` ignored
+`config.sourceRoot` and walked up to the workspace `vibe.toml` — the launcher
+install ran cargo in the wrong dir; now `config.sourceRoot` wins (`e181c35`).
+(2) the Electron apps' `file:../../common/v0.1.0` dep resolved to
+`<product>/common/...` (wrong — common sits one level higher); bumped to
+`file:../../../common/v0.1.0` so the symlink lands on the real common pkg
+(`33421dc`). **One known caveat:** `electron-packager` shares a temp cache
+under `os.tmpdir()`; two concurrent `<product> self install` runs race on the
+`win32-x64-template` rename. Sequential installs are fine — run them one at a
+time, not in parallel. **No blocker. Next:** the version-manager is fully
+exercised; nothing pending.
+
 ## CHECKPOINT 2026-07-21 — VERSION-MANAGER PORT LANDED (Phase 2b)
 
 **Phase:** 2b. **Status:** the ported version-manager (`vvm/`, twin of the host's `vibe self`,
