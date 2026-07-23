@@ -29,11 +29,12 @@ publishes itself there through its own version-manager
 
 ```
 vibevm-term/
-└── org.vibevm.term/                 <- the namespace (a vibe registry root)
-    ├── common/v0.1.0/               <- term-common (shared JS + vvm port + contracts)
-    ├── launcher/v0.1.0/             <- vibe-launcher (Rust workspace)
-    ├── vibeterm/v0.1.0/             <- the complex terminal
-    └── vibeframe/v0.1.0/            <- the simple frame
+└── packages/
+    └── org.vibevm.term/             <- the namespace (project-packages auto-discovery)
+        ├── common/v0.1.0/           <- term-common (shared JS + vvm port + contracts)
+        ├── launcher/v0.1.0/         <- vibe-launcher (Rust workspace)
+        ├── vibeterm/v0.1.0/         <- the complex terminal
+        └── vibeframe/v0.1.0/        <- the simple frame
 ```
 
 Each package carries its own `vibe.toml`, its own `spec/` tree, its own
@@ -42,16 +43,25 @@ own `WAL.md`. The AI-Native Rust discipline is adopted from birth via
 `requires.packages` (static-transitive), as in
 `packages/org.vibevm.fractality/`.
 
-## Consuming from the host
+## Consuming from another project
 
-This repo is a **local-directory vibe registry** (PROP-002 §2.2.2). A project
-that depends on `org.vibevm.term/*` resolves it from disk — add to
-`~/.vibe/registry.toml`:
+This repo's own packages resolve from `packages/org.vibevm.term/` via
+**project-packages auto-discovery** (PROP-030 §3.3) — `vibe install` here
+finds them with no `[[registry]]` block and no `~/.vibe/registry.toml` entry.
+
+A *different* project that depends on `org.vibevm.term/*` has two options:
+
+1. **Project-packages** (recommended when you vendor the term products into
+   your own checkout): place the packages under your project's
+   `packages/org.vibevm.term/` and let auto-discovery resolve them — no
+   `[[registry]]` needed.
+2. **Local-directory registry** (PROP-002 §2.2.2) — point a `[[registry]]`
+   block at this repo's `packages/` directory:
 
 ```toml
 [[registry]]
 name = "vibevm-term"
-url = "file:///C:/Users/olegc/git/v/vibevm-term"
+url = "file:///C:/Users/olegc/git/v/vibevm-term/packages"
 ```
 
 …and reference the packages in the consuming project's `vibe.toml`:

@@ -1,13 +1,17 @@
 # The workspace-level vibe manifest for the vibevm-term repo.
 #
-# This repo is BOTH:
-#   (a) a vibe registry root — `org.vibevm.term/<package>/v<version>/` is
-#       resolvable by any project that points a `[[registry]]` block at this
-#       directory (file:// local-directory backend, PROP-002 §2.2.2);
-#   (b) a vibe project in its own right — the packages under
-#       `org.vibevm.term/` consume the AI-Native Rust stack + the redbook
-#       practices as static-transitive deps, the same adoption pattern as
-#       `packages/org.vibevm.fractality/` in the host repo.
+# This repo is a vibe project in its own right — the packages under
+# `packages/org.vibevm.term/` consume the AI-Native Rust stack + the redbook
+# practices as static-transitive deps, the same adoption pattern as
+# `packages/org.vibevm.fractality/` in the host repo.
+#
+# The in-repo products (vibeterm, vibeframe, launcher, term-common) are
+# resolved from `packages/org.vibevm.term/` via project-packages auto-
+# discovery (PROP-030 §3.3): a `<project_root>/packages/` directory is opened
+# as a LocalRegistry automatically, no `[[registry]]` block needed. The
+# `[[registry]]` blocks below cover the redbook/ai-native members published
+# only on vibespecs (GitHub/GitVerse) — those are the deps that are NOT in
+# this repo.
 
 [project]
 name = "vibevm-term"
@@ -25,10 +29,11 @@ authors = ["Oleg Chirukhin"]
 "stack:org.vibevm.ai-native/rust-ai-native" = "^0.7.0"
 
 # The default registry pair every vibevm project carries (same blocks the
-# host root and `vibe init` use). In-repo packages resolve from the local
-# `org.vibevm.term/` directory (this repo is its own registry); these two
-# cover the redbook/ai-native members published only on vibespecs. GitHub is
-# the canonical publish target; GitVerse is the resolve fall-through.
+# host root and `vibe init` use). The in-repo product packages resolve from
+# `packages/org.vibevm.term/` via project-packages auto-discovery
+# (PROP-030 §3.3) — these two registries cover only the redbook/ai-native
+# members published on vibespecs. GitHub is the canonical publish target;
+# GitVerse is the resolve fall-through.
 [[registry]]
 name = "vibespecs"
 url = "https://github.com/vibespecs"

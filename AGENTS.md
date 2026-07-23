@@ -28,16 +28,20 @@ umbrella, split out from the open-source host
 
 ## What lives here
 
-- `org.vibevm.term/common/` — **term-common**: shared TypeScript helpers
-  (arg/keymap/packaging) and the normative contracts shared by all
+The product packages live under `packages/org.vibevm.term/` (the
+project-packages auto-discovery root, PROP-030 §3.3 — `vibe install` here
+resolves them with no `[[registry]]` block):
+
+- `packages/org.vibevm.term/common/` — **term-common**: shared TypeScript
+  helpers (arg/keymap/packaging) and the normative contracts shared by all
   terminal products (the control protocol, the discovery file, the OSC 7773
   icon swap, env markers, the version-manager port).
-- `org.vibevm.term/launcher/` — **vibe-launcher**: the Rust GUI launchers
-  (`vibetree` / `vibeterm` / `vibeframe` `.exe`).
-- `org.vibevm.term/vibeterm/` — **vibeterm**: the complex multi-tab
-  terminal workspace (Electron + SolidJS).
-- `org.vibevm.term/vibeframe/` — **vibeframe**: the simple single-window
-  terminal frame (VibeTree's host).
+- `packages/org.vibevm.term/launcher/` — **vibe-launcher**: the Rust GUI
+  launchers (`vibetree` / `vibeterm` / `vibeframe` `.exe`).
+- `packages/org.vibevm.term/vibeterm/` — **vibeterm**: the complex
+  multi-tab terminal workspace (Electron + SolidJS).
+- `packages/org.vibevm.term/vibeframe/` — **vibeframe**: the simple
+  single-window terminal frame (VibeTree's host).
 
 ## Working in a package
 
